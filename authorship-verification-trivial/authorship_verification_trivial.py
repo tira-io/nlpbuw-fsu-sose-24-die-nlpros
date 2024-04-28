@@ -62,7 +62,7 @@ if __name__ == "__main__":
             else:
                 temp_list.append(len(word_to_id)) 
         vector_dict[tuple(temp_list)] = element[2] 
-    #print(vector_dict)
+
     np_test = text_validation.to_numpy()
     np_ttargets = targets_validation.to_numpy()
     merged_test = []
@@ -83,7 +83,6 @@ if __name__ == "__main__":
             else:
                 temp_list.append(len(word_to_id)) 
         test_dict[tuple(temp_list)] = element[2]
-    #print(test_dict) 
 
     def pad_vectors(vectors, max_length, padding_value=-1):
         padded_vectors = []
@@ -92,7 +91,7 @@ if __name__ == "__main__":
                 padded_vector = list(vector)
                 padded_vector.extend([padding_value]*(max_length - len(vector)))
             else:
-                padded_vector = vector[:max_length]  # Truncate if longer than max_length
+                padded_vector = vector[:max_length] 
             padded_vectors.append(padded_vector)
         return padded_vectors
 
@@ -123,8 +122,6 @@ if __name__ == "__main__":
     print("Trainingsgenauigkeit:", accuracy_train)
     print("Testgenauigkeit: ", accuracy_test)
 
-    
-
 
     # classifying the data
     prediction = (
@@ -137,6 +134,11 @@ if __name__ == "__main__":
     prediction.name = "generated"
     prediction = prediction.reset_index()
     print(prediction)
+    i = 0
+    while i < len(prediction):
+        prediction.at[i,"generated"] = y_pred_test[i]
+        i = i + 1
+    print(prediction)  
     
 
     # saving the prediction
